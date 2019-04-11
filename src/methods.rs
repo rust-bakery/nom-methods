@@ -15,7 +15,7 @@ macro_rules! method (
   // Non-public immutable self
   ($name:ident<$a:ty>( $i:ty ) -> $o:ty, $self_:ident, $submac:ident!( $($args:tt)* )) => (
       #[allow(unused_variables)]
-      fn $name( $self_: $a, i: $i ) -> ($a, $crate::lib::IResult<$i,$o,u32>) {
+      fn $name( $self_: $a, i: $i ) -> ($a, $crate::lib::IResult<$i,$o,($i,$crate::lib::ErrorKind)>) {
         let result = $submac!(i, $($args)*);
         ($self_, result)
       }
@@ -29,21 +29,21 @@ macro_rules! method (
   );
   ($name:ident<$a:ty,$i:ty,$o:ty>, $self_:ident, $submac:ident!( $($args:tt)* )) => (
     #[allow(unused_variables)]
-    fn $name( $self_: $a, i: $i ) -> ($a, $crate::lib::IResult<$i,$o,u32>)  {
+    fn $name( $self_: $a, i: $i ) -> ($a, $crate::lib::IResult<$i,$o,($i, $crate::lib::ErrorKind)>)  {
       let result = $submac!(i, $($args)*);
       ($self_, result)
     }
   );
   ($name:ident<$a:ty,$o:ty>, $self_:ident, $submac:ident!( $($args:tt)* )) => (
       #[allow(unused_variables)]
-      fn $name( $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], $o, u32>) {
+      fn $name( $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], $o, (&[u8], $crate::lib::ErrorKind)>) {
         let result = $submac!(i, $($args)*);
         ($self_, result)
       }
   );
   ($name:ident<$a:ty>, $self_:ident, $submac:ident!( $($args:tt)* )) => (
       #[allow(unused_variables)]
-      fn $name( $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], &[u8], u32>) {
+      fn $name( $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], &[u8], (&[u8], $crate::lib::ErrorKind)>) {
         let result = $submac!(i, $($args)*);
         ($self_, result)
       }
@@ -51,7 +51,7 @@ macro_rules! method (
   // Public immutable self
   (pub $name:ident<$a:ty>( $i:ty ) -> $o:ty, $self_:ident, $submac:ident!( $($args:tt)* )) => (
       #[allow(unused_variables)]
-      pub fn $name( $self_: $a, i: $i ) -> ($a, $crate::lib::IResult<$i,$o,u32>) {
+      pub fn $name( $self_: $a, i: $i ) -> ($a, $crate::lib::IResult<$i,$o,($i, $crate::lib::ErrorKind)>) {
         let result = $submac!(i, $($args)*);
         ($self_, result)
       }
@@ -65,21 +65,21 @@ macro_rules! method (
   );
   (pub $name:ident<$a:ty,$i:ty,$o:ty>, $self_:ident, $submac:ident!( $($args:tt)* )) => (
     #[allow(unused_variables)]
-    pub fn $name( $self_: $a,i: $i ) -> ($a, $crate::lib::IResult<$i,$o,u32>)  {
+    pub fn $name( $self_: $a,i: $i ) -> ($a, $crate::lib::IResult<$i,$o,($i, $crate::lib::ErrorKind)>)  {
       let result = $submac!(i, $($args)*);
       ($self_, result)
     }
   );
   (pub $name:ident<$a:ty,$o:ty>, $self_:ident, $submac:ident!( $($args:tt)* )) => (
     #[allow(unused_variables)]
-    pub fn $name( $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], $o, u32>) {
+    pub fn $name( $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], $o, (&[u8], $crate::lib::ErrorKind)>) {
       let result = $submac!(i, $($args)*);
       ($self_, result)
     }
   );
   (pub $name:ident<$a:ty>, $self_:ident, $submac:ident!( $($args:tt)* )) => (
     #[allow(unused_variables)]
-    pub fn $name( $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], &[u8], u32>) {
+    pub fn $name( $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], &[u8], (&[u8], $crate::lib::ErrorKind)>) {
       let result = $submac!(i, $($args)*);
       ($self_, result)
     }
@@ -87,7 +87,7 @@ macro_rules! method (
   // Non-public mutable self
   ($name:ident<$a:ty>( $i:ty ) -> $o:ty, mut $self_:ident, $submac:ident!( $($args:tt)* )) => (
       #[allow(unused_variables)]
-      fn $name( mut $self_: $a, i: $i ) -> ($a, $crate::lib::IResult<$i,$o,u32>) {
+      fn $name( mut $self_: $a, i: $i ) -> ($a, $crate::lib::IResult<$i,$o,($i, $crate::lib::ErrorKind)>) {
         let result = $submac!(i, $($args)*);
         ($self_, result)
       }
@@ -101,21 +101,21 @@ macro_rules! method (
   );
   ($name:ident<$a:ty,$i:ty,$o:ty>, mut $self_:ident, $submac:ident!( $($args:tt)* )) => (
     #[allow(unused_variables)]
-    fn $name( mut $self_: $a, i: $i ) -> ($a, $crate::lib::IResult<$i,$o,u32>)  {
+    fn $name( mut $self_: $a, i: $i ) -> ($a, $crate::lib::IResult<$i,$o,($i, $crate::lib::ErrorKind)>)  {
       let result = $submac!(i, $($args)*);
       ($self_, result)
     }
   );
   ($name:ident<$a:ty,$o:ty>, mut $self_:ident, $submac:ident!( $($args:tt)* )) => (
       #[allow(unused_variables)]
-      fn $name( mut $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], $o, u32>) {
+      fn $name( mut $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], $o, (&[u8], $crate::lib::ErrorKind)>) {
         let result = $submac!(i, $($args)*);
         ($self_, result)
       }
   );
   ($name:ident<$a:ty>, mut $self_:ident, $submac:ident!( $($args:tt)* )) => (
       #[allow(unused_variables)]
-      fn $name( mut $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], &[u8], u32>) {
+      fn $name( mut $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], &[u8], (&[u8], $crate::lib::ErrorKind)>) {
         let result = $submac!(i, $($args)*);
         ($self_, result)
       }
@@ -123,7 +123,7 @@ macro_rules! method (
   // Public mutable self
   (pub $name:ident<$a:ty>( $i:ty ) -> $o:ty, mut $self_:ident, $submac:ident!( $($args:tt)* )) => (
       #[allow(unused_variables)]
-      pub fn $name( mut $self_: $a, i: $i ) -> ($a, $crate::lib::IResult<$i,$o,u32>) {
+      pub fn $name( mut $self_: $a, i: $i ) -> ($a, $crate::lib::IResult<$i,$o,($i, $crate::lib::ErrorKind)>) {
         let result = $submac!(i, $($args)*);
         ($self_, result)
       }
@@ -137,21 +137,21 @@ macro_rules! method (
   );
   (pub $name:ident<$a:ty,$i:ty,$o:ty>, mut $self_:ident, $submac:ident!( $($args:tt)* )) => (
     #[allow(unused_variables)]
-    pub fn $name( mut $self_: $a,i: $i ) -> ($a, $crate::lib::IResult<$i,$o,u32>)  {
+    pub fn $name( mut $self_: $a,i: $i ) -> ($a, $crate::lib::IResult<$i,$o,($i, $crate::lib::ErrorKind)>)  {
       let result = $submac!(i, $($args)*);
       ($self_, result)
     }
   );
   (pub $name:ident<$a:ty,$o:ty>, mut $self_:ident, $submac:ident!( $($args:tt)* )) => (
     #[allow(unused_variables)]
-    pub fn $name( mut $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], $o, u32>) {
+    pub fn $name( mut $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], $o, (&[u8], $crate::lib::ErrorKind)>) {
       let result = $submac!(i, $($args)*);
       ($self_, result)
     }
   );
   (pub $name:ident<$a:ty>, mut $self_:ident, $submac:ident!( $($args:tt)* )) => (
     #[allow(unused_variables)]
-    pub fn $name( mut $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], &[u8], u32>) {
+    pub fn $name( mut $self_: $a, i: &[u8] ) -> ($a, $crate::lib::IResult<&[u8], &[u8], (&[u8], $crate::lib::ErrorKind)>) {
       let result = $submac!(i, $($args)*);
       ($self_, result)
     }
@@ -193,8 +193,7 @@ mod tests {
   macro_rules! tag_s (
     ($i:expr, $tag: expr) => (
       {
-        use $crate::lib::IResult;
-        use $crate::nom::{Err,ErrorKind,Needed,need_more};
+        use nom::{Err,ErrorKind,Needed,IResult, need_more};
 
         let res: IResult<_,_> = if $tag.len() > $i.len() {
           need_more($i, Needed::Size($tag.len()))
@@ -212,8 +211,7 @@ mod tests {
   macro_rules! take_s (
     ($i:expr, $count:expr) => (
       {
-        use $crate::lib::IResult;
-        use $crate::nom::{Needed,need_more};
+        use nom::{Needed,IResult,need_more};
 
         let cnt = $count as usize;
         let res: IResult<_,_> = if $i.chars().count() < cnt {
