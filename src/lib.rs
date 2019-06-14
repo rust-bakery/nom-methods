@@ -99,7 +99,7 @@
 extern crate nom;
 
 pub mod lib {
-  pub use nom::{IResult, ErrorKind};
+  pub use nom::{IResult, error::ErrorKind};
 }
 
 pub use self::methods::*;

@@ -18,4 +18,4 @@ include = [
 ]
 
 [dependencies]
-nom = "^4"
+nom = "^5.0.0-beta2"
