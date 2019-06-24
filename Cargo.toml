@@ -1,6 +1,6 @@
 [package]
 name = "nom-methods"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Geoffroy Couprie <contact@geoffroycouprie.com>"]
 description = "nom combinators to use nom parsers as methods"
 license = "MIT"
@@ -18,4 +18,4 @@ include = [
 ]
 
 [dependencies]
-nom = "^5.0.0-beta2"
+nom = "5"
