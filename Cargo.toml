@@ -18,4 +18,4 @@ include = [
 ]
 
 [dependencies]
-nom = "5"
+nom = "6"
